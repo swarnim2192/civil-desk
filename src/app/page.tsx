@@ -1,79 +1,52 @@
-export default function Home() {
-  // Temporary metrics (replace later with API or DB)
-  const metrics = { projects: 0, budgetCr: 0, workers: 0 };
+// src/app/page.tsx
+'use client';
 
+import { motion } from 'framer-motion';
+
+export default function HomePage() {
   return (
-    <main className="hero">
-      {/* Background overlay */}
-      <div className="overlay" />
+    <main>
+      <motion.div
+  className="shine-overlay"
+  initial={{ opacity: 0 }}
+  animate={{ opacity: [0, 1, 0] }}
+  transition={{ duration: 1.8, ease: 'easeInOut' }}
+/>
 
-      {/* ===== NAVBAR ===== */}
-      <nav className="topnav reveal d1">
-        <span className="brand">Ato Ko Construction</span>
-        <div className="links">
-          <a href="#dashboard">Dashboard</a>
-          <a href="#projects">Projects</a>
-          <a href="#docs">Docs</a>
-        </div>
-      </nav>
 
-      {/* ===== HERO CONTENT ===== */}
-      <section className="content">
-        <h1 className="reveal d2">Build. Track. Deliver.</h1>
-        <p className="reveal d3">
-          Daily progress, budgets, labor & materials in one place.
-        </p>
 
-        <div className="cta reveal d4">
-          <a className="btn primary" href="#dashboard">Open Dashboard</a>
-          <a className="btn secondary" href="#projects">View Projects</a>
-        </div>
+      <section className="hero">
+        {/* Animated background image */}
+        <motion.div
+          className="hero-bg"
+          initial={{ opacity: 0, scale: 1.04, filter: 'blur(2px)' }}
+          animate={{ opacity: 1, scale: 1.0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+          aria-hidden="true"
+        />
 
-        {/* ===== STATS SECTION ===== */}
-        {(metrics.projects + metrics.budgetCr + metrics.workers) > 0 ? (
-          <ul className="stats reveal d4">
-            <li><strong>{metrics.projects}</strong> Active Projects</li>
-            <li><strong>₨ {metrics.budgetCr}Cr</strong> Budget Tracked</li>
-            <li><strong>{metrics.workers}</strong> Workers</li>
-          </ul>
-        ) : (
-          <div className="reveal d4" style={{
-            marginTop: '1rem',
-            opacity: 0.9,
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <span style={{
-              padding: '.55rem .9rem',
-              borderRadius: 12,
-              background: 'rgba(255,255,255,.12)',
-              border: '1px solid rgba(255,255,255,.18)'
-            }}>
-              Nothing tracked yet — connect your data to show live stats.
-            </span>
+        {/* Readability overlay */}
+        <div className="hero-overlay" aria-hidden="true" />
+
+        {/* Centered content */}
+        <motion.div
+          className="hero-content"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.18 }}
+        >
+          <h1 className="hero-title">Build. Track. Deliver.</h1>
+          <p className="hero-subtitle">
+            Daily progress, budgets, labor &amp; materials in one place.
+          </p>
+
+          <div className="hero-actions">
+            <a className="btn btn-primary" href="/dashboard">Open Dashboard</a>
+            <a className="btn btn-ghost" href="/#projects">View Projects</a>
           </div>
-        )}
+          {/* Tracker note removed */}
+        </motion.div>
       </section>
-
-      {/* ===== FOOTER ===== */}
-      <footer className="footer reveal d4">
-        © {new Date().getFullYear()} Ato Ko Construction
-      </footer>
-
-      {/* Cursor Glow Effect */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.addEventListener('pointermove', e => {
-              document.querySelectorAll('.btn.primary, .btn.secondary').forEach(b => {
-                const r = b.getBoundingClientRect();
-                b.style.setProperty('--x', (e.clientX - r.left) + 'px');
-                b.style.setProperty('--y', (e.clientY - r.top) + 'px');
-              });
-            });
-          `,
-        }}
-      />
     </main>
   );
 }
