@@ -1,26 +1,269 @@
-@import "tailwindcss";
+/* =========================================================
+   GLOBAL STYLES — Ato Ko Construction (Hero + Glass Theme)
+   ========================================================= */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* === Base Reset === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* === Hero Section === */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url('/images/building.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0;
+  animation: fadeIn 2s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* === Overlay === */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(0,0,0,.35), transparent 60%),
+    linear-gradient(120deg, rgba(20,60,120,.35), rgba(0,0,0,.35) 50%, rgba(0,120,160,.35));
+  animation: heroGlow 18s ease-in-out infinite alternate;
+  z-index: 0;
+}
+@keyframes heroGlow {
+  0% { background-position: 0% 0%, 0% 0%; }
+  100% { background-position: 60% 40%, 100% 100%; }
+}
+
+/* === Navbar === */
+.topnav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px;
+  width: 100%;
+  backdrop-filter: saturate(130%) blur(8px);
+  background: linear-gradient(to bottom, rgba(15,18,30,.45), rgba(15,18,30,.10));
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+  z-index: 10;
+}
+
+/* === Brand (Ato Ko Construction) === */
+.brand {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 22px;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.25);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.45), 0 0 0 5px rgba(59,130,246,.20);
+}
+.brand::before {
+  content: 'AK';
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #0B1220;
+  background: linear-gradient(135deg, #22D3EE, #3B82F6);
+  box-shadow: 0 6px 14px rgba(59,130,246,.45);
+}
+.brand::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -6px;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #22D3EE, #3B82F6, #22D3EE);
+  box-shadow: 0 0 18px rgba(34,211,238,.8);
+  animation: pulsebar 3s ease-in-out infinite;
+}
+@keyframes pulsebar {
+  0%, 100% { opacity: 0.6; filter: blur(0px); }
+  50% { opacity: 1; filter: blur(1.5px); }
+}
+
+/* === Nav Links === */
+.links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.15);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+.links a:hover { background: rgba(255,255,255,0.3); }
+
+/* === Hero Text === */
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 14vh;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.content h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+.content h1::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.25) 35%, transparent 70%);
+  transform: skewX(-20deg) translateX(-120%);
+  animation: sheen 3.5s ease-in-out infinite;
+}
+@keyframes sheen {
+  0% { transform: skewX(-20deg) translateX(-120%); }
+  45% { transform: skewX(-20deg) translateX(120%); }
+  100% { transform: skewX(-20deg) translateX(120%); }
+}
+.content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #e5e7eb;
+}
+
+/* === Buttons === */
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.btn {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn.primary {
+  padding: 0.8rem 1.6rem;
+  background: linear-gradient(135deg, #3B82F6, #22D3EE);
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(59,130,246,.35);
+}
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(59,130,246,.45);
+}
+
+/* === View Projects (Secondary Button) === */
+.btn.secondary {
+  padding: 0.8rem 1.6rem;
+  color: #fff;
+  background: rgba(255,255,255,.14);
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.btn.secondary::before {
+  content:'';
+  position:absolute; inset:0;
+  padding:1.5px; border-radius:inherit;
+  background:linear-gradient(135deg,#22D3EE,#3B82F6);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+}
+.btn.secondary:hover {
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.20);
+  box-shadow:0 12px 28px rgba(59,130,246,.32);
+}
+.btn.secondary:active { transform:translateY(0) scale(.99); }
+
+/* === Stats Strip === */
+.stats {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #e8eef6;
+}
+.stats li {
+  list-style: none;
+  padding: .55rem .9rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(6px);
+  font-size: .95rem;
+}
+.stats strong { font-weight: 800; margin-right: .35rem; color: #fff; }
+
+/* === Footer === */
+.footer {
+  text-align: center;
+  padding: 1.5rem 0;
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  opacity: 0.9;
+}
+
+/* === Fade-up Reveal Animations === */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: revealUp .8s ease-out forwards;
+}
+.reveal.d1 { animation-delay: .1s; }
+.reveal.d2 { animation-delay: .22s; }
+.reveal.d3 { animation-delay: .34s; }
+.reveal.d4 { animation-delay: .46s; }
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.d1, .reveal.d2, .reveal.d3, .reveal.d4 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* === Responsive === */
+@media (max-width: 640px) {
+  .topnav { padding: 12px 16px; }
+  .brand { font-size: 18px; padding: 8px 14px; }
+  .content { margin-top: 10vh; }
+  .content h1 { font-size: clamp(2rem, 7vw, 3.2rem); }
+  .cta { gap: .6rem; flex-direction: column; }
 }
